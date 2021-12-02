@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="accfe1ab-8ab9-4f21-801e-e9dd7aa9c8c3" >
+		<db:my-sql-connection host="sql6.freesqldatabase.com" port="3306" user="sql6454913" password="3sr5s661f8" database="sql6454913" />
+	</db:config>
+	<flow name="getflights" doc:id="ed25ec28-1f0d-468e-93ae-331ef7e663ec" >
+		<db:select doc:name="Select" doc:id="b4e6d4cd-79ab-4882-b103-b00804d60a76" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from flights where flight_source = :flight_source and flight_destination = :flight_destination]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{'flight_source' : attributes.queryParams.flight_source,
+'flight_destination' : attributes.queryParams.flight_destination}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="19aa4c91-675c-4240-a3cc-c87523645a82" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e9d0b03a-1d78-4e3f-8d60-5fbef67e0c6c" />
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="77359fec-0a96-42a5-a6d3-5aca3d80d233" type="DB:BAD_SQL_SYNTAX">
+				<ee:transform doc:name="Transform Message" doc:id="69bf7f71-1874-4e79-ac7e-5c12db2a79b9" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Sql Syntax Error \n" ++ (error.detailedDescription default "")
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-continue>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="50a249bc-cf0a-4e15-bdc6-5dcf16a65eb9" type="DB:CONNECTIVITY">
+				<ee:transform doc:name="Transform Message" doc:id="d082d2de-9a03-46ae-8db1-19f5ee13479f" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message": "Database Connectivity Error \n" ++ (error.detailedDescription default "")
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="postflights" doc:id="3efebab4-40fc-4b1a-b904-6bb99a6be3a8" >
+		<ee:transform doc:name="Transform Message" doc:id="5b70c351-7694-45a6-922d-80cd4173963c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	payload: "Flights Booked Successfully"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a5371089-f625-40b4-b761-39a7a6a1b56a" />
+	</flow>
+</mule>

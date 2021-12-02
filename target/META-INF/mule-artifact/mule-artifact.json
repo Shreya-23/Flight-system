@@ -1,0 +1,36 @@
+{
+  "configs": [
+    "indigo_flights_implementation.xml",
+    "indigo_flights_interface.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "com.mycompany:flights_poc:1.0.0-SNAPSHOT",
+  "minMuleVersion": "4.4.0",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedPackages": [],
+      "exportedResources": [
+        "api/Data Types/flights_datatype.raml",
+        "api/Data Types/flights_library.raml",
+        "api/Data Types/passengers_datatype.raml",
+        "api/Examples File/bookingdetails_example.raml",
+        "api/Examples File/flight_example.raml",
+        "api/Examples File/passenger_example.raml",
+        "api/indigo_flights_sd.raml",
+        "api/Security Scheme/clientID_Secret.raml",
+        "api/Traits File/flights_trait.raml",
+        "application-types.xml",
+        "indigo_flights_implementation.xml",
+        "indigo_flights_interface.xml",
+        "log4j2.xml"
+      ]
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}
