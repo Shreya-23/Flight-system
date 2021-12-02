@@ -1,0 +1,12 @@
+#%RAML 1.0 Trait
+
+responses:
+      401:
+        description: Unauthorized, The client_id or client_secret are not valid or the client does not have access.
+      429:
+        description: The client used all of its request quota for the current period.
+      500:
+        description: An internal error occurred.
+      503:
+        description: Contracts Information Unreachable.
+

@@ -1,0 +1,11 @@
+[
+  {
+    "flight_date": "2021-11-16T14:10:00",
+    "flight_name": "ING04",
+    "flight_fare": 6000,
+    "flight_source": "MUM",
+    "flight_id": 104,
+    "flight_availableSeats": 180,
+    "flight_destination": "LKO"
+  }
+]

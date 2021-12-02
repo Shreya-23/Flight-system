@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="indigo_flights_interface-test-suite.xml" />
+	<munit:test name="indigo_flights_interface-test-suite-post:\flightBooking_details:application\json:indigo_flights_sd-2-configTest" doc:id="beaa901a-b62e-4323-a5d3-c152eb6f49e6" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when: Mock Select Component of Database" doc:id="5f63f68d-53d2-4b92-aabb-a675e29bd9f0" processor="db:select">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Select" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="b4e6d4cd-79ab-4882-b103-b00804d60a76" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="Database_Config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('sampledb.txt')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to post:\flightBooking_details:application\json:indigo_flights_sd-2-config" doc:id="9cf3aae6-1dc1-4367-ab74-361ba8f7f5f3" name="post:\flightBooking_details:application\json:indigo_flights_sd-2-config"/>
+		</munit:execution>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-indigo_flights_sd-2-mainTest" doc:id="95525276-fa19-4605-b785-e5805eb7a33d" description="Test" expectedErrorType="APIKIT:BAD_REQUEST">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when: APIKIT: BAD_REQUEST" doc:id="6e0030cf-475d-4801-b555-01b310adf338" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="indigo_flights_sd-2-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indigo_flights_sd-2-main" doc:id="31a5cad7-1b4f-45be-9123-842a621cb44f" name="indigo_flights_sd-2-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="90247ba9-8f95-4058-bf64-25e11a1063a2" actual="#[vars.httpStatus]" expected="#[400]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-indigo_flights_sd-2-mainTest1" doc:id="aff9171b-a310-4329-9419-db21c35b5831" description="Test" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when APIKIT:METHOD_NOT_ALLOWED" doc:id="c574b432-5af6-423d-8e88-0076da858a00" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="indigo_flights_sd-2-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indigo_flights_sd-2-main" doc:id="77ed524d-a20d-4966-a6cc-8f8306d653cf" name="indigo_flights_sd-2-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="5b3c6853-72d9-4977-b2e7-c09040b7ee6b" actual="#[vars.httpStatus]" expected="#[405]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-indigo_flights_sd-2-mainTest2" doc:id="46cf83df-2368-46e3-ba6a-967e52f0fcea" description="Test" expectedErrorType="APIKIT:NOT_FOUND">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when APIKIT:NOT_FOUND" doc:id="600a91fe-3744-4ca7-b6cc-64b30d267007" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="indigo_flights_sd-2-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indigo_flights_sd-2-main" doc:id="6d1c7ce0-69f0-4e33-9548-e8854c9eb589" name="indigo_flights_sd-2-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="5a1c6306-097a-4d4e-bed1-b0121e43379c" actual="#[vars.httpStatus]" expected="#[404]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-indigo_flights_sd-2-mainTest3" doc:id="073d68bd-aed3-4d81-b1cc-e714b24a5d8a" description="Test" expectedErrorType="APIKIT:NOT_ACCEPTABLE">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when API_KIT:NOT_ACCEPTABLE" doc:id="f742cc82-9b35-47ed-994f-4a4b89049207" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="indigo_flights_sd-2-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indigo_flights_sd-2-main" doc:id="5d942794-1c25-4685-8fa7-e43c4df32b42" name="indigo_flights_sd-2-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="665453c8-1a5d-4239-9084-26568c6d6d4c" actual="#[vars.httpStatus]" expected="#[406]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-indigo_flights_sd-2-mainTest4" doc:id="7b31b28f-4912-4363-968c-eb6bb304b446" description="Test" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when APIKIT:UNSUPPORTED_MEDIA_TYPE" doc:id="ecb3a461-d0c6-4020-8c99-b63ee6392ab0" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="indigo_flights_sd-2-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indigo_flights_sd-2-main" doc:id="58b82381-6060-427d-b206-ee68b92dfa6a" name="indigo_flights_sd-2-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="16d294fd-8fd7-40b1-9875-9fb267ced06d" actual="#[vars.httpStatus]" expected="#[415]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-indigo_flights_sd-2-mainTest5" doc:id="4ee511e2-0362-4488-b0a2-dee7e7e601ab" description="Test" expectedErrorType="APIKIT:NOT_IMPLEMENTED">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when APIKIT:NOT_IMPLEMENTED" doc:id="c5af8c9a-a92f-486f-8fe9-7039cc2e16d9" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="indigo_flights_sd-2-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to indigo_flights_sd-2-main" doc:id="7599c5ca-0da3-4b89-80fa-460b18dc3815" name="indigo_flights_sd-2-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="a35951f3-6acb-4549-8498-853f8812dff7" actual="#[vars.httpStatus]" expected="#[501]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="indigo_flights_interface-test-suite-get:\flights:indigo_flights_sd-2-configTest" doc:id="f81d2147-e788-42fc-990d-a679b1bc5552" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\flights:indigo_flights_sd-2-config" doc:id="5c6b6564-eee6-4986-96fa-7d3c2c89114e" name="get:\flights:indigo_flights_sd-2-config"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

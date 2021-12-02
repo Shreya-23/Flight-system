@@ -1,0 +1,19 @@
+#%RAML 1.0 Library
+
+types:
+  flights_details: !include flights_datatype.raml
+  passenger_details: !include passengers_datatype.raml
+
+  booking_details:
+    type: object
+    properties:
+      flight_id: number
+      flight_fare: number
+      flight_date: datetime-only
+      flight_source: string
+      flight_destination: string
+      passengers_data: passenger_details[]
+
+      
+
+

@@ -1,0 +1,82 @@
+#%RAML 1.0
+title: Indigo_Flights_SD
+
+securitySchemes:
+  secureby: !include /Security Scheme/clientID_Secret.raml
+
+uses:
+  lib : /Data Types/flights_library.raml
+
+traits:
+  trait : !include /Traits File/flights_trait.raml   
+
+/flights:
+
+  is : [trait]
+  #securedBy: [secureby]
+  get:
+    description: "Book Indigo Flights"
+    queryParameters:
+
+      lib.flight_source:
+        required: false
+        minLength: 3
+        maxLength: 3
+        enum:
+          - BLR
+          - KOL
+          - MUM
+          - CHN 
+          - DEL
+          - LKO
+
+      lib.flight_destination:
+        required: False
+        minLength: 3
+        maxLength: 3
+        enum:
+          - BLR
+          - KOL
+          - MUM
+          - CHN 
+          - DEL
+          - LKO
+
+    responses:
+      200:
+        description: "Please Select Your Flight"
+        body:
+          application/json:
+            type: lib.flights_details[]
+            examples: 
+              output: !include Examples File/flight_example.raml
+              
+/flightBooking_details:
+  is: [trait]
+  #securedBy:
+    #- secureby
+  post:
+    description: "Passenger Booking Details"
+    body:
+      application/json:
+        type: lib.passenger_details[]
+        examples:
+          input: !include Examples File/passenger_example.raml
+          
+    responses:
+        201:
+          body:
+            application/json:
+              description: Please find the Flight Details
+              type: lib.booking_details[]
+              examples:
+                output: !include Examples File/bookingdetails_example.raml
+                
+            
+
+                 
+
+
+
+                       
+
