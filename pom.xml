@@ -33,20 +33,19 @@
 				<configuration>
 				<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<mule.version>4.4.0</mule.version>
-						<!-- Deploy User Parameter -->
-						<anypoint.username>Shreya_2306</anypoint.username>
-						<anypoint.password>Shreya@2306</anypoint.password>
-						<!-- Environment Parameter -->
-						<cloudhub.environment>Sandbox</cloudhub.environment>
-						<cloudhub.app>flight-sys-one</cloudhub.app>
-						<cloudhub.bg>Apisero</cloudhub.bg>
-						<cloudhub.worker>Micro</cloudhub.worker>
-						<cloudhub.workers>1</cloudhub.workers>
+						<muleVersion>${mule.version}</muleVersion>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
+						<environment>${cloudhub.environment}</environment>
+						<applicationName>${cloudhub.app}</applicationName>
+						<businessGroup>${cloudhub.bg}</businessGroup>
+						<workers>${cloudhub.workers}</workers>
+						<workerType>${cloudhub.worker}</workerType>
 						<objectStoreV2>true</objectStoreV2>
+						<!-- <server>AnypointSandbox</server> -->
 						<properties>
-							<anypoint.platform.client_id>f8f4eb7d5ea942cb8a6d6d8a2011c667</anypoint.platform.client_id>
-							<anypoint.platform.client_secret>e6591AA2E1D041B4995069c1968C3a36</anypoint.platform.client_secret>
+							<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
+							<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
 						</properties>
 					</cloudHubDeployment>
 					<sharedLibraries>
