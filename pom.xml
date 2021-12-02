@@ -31,12 +31,6 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
-					<sharedLibraries>
-						<sharedLibrary>
-							<groupId>com.mycompany</groupId>
-							<artifactId>mysql-connector-java-8.0.16</artifactId>
-						</sharedLibrary>
-					</sharedLibraries>
 					<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
 						<muleVersion>4.4.0</muleVersion>
@@ -54,6 +48,12 @@
 							<anypoint.platform.client_secret>e6591AA2E1D041B4995069c1968C3a36</anypoint.platform.client_secret>
 						</properties>
 					</cloudHubDeployment>
+					<sharedLibraries>
+						<sharedLibrary>
+							<groupId>com.mycompany</groupId>
+							<artifactId>mysql-connector-java-8.0.16</artifactId>
+						</sharedLibrary>
+					</sharedLibraries>
 					<classifier>mule-application</classifier>
 				</configuration>
 			</plugin>
