@@ -39,7 +39,7 @@
 						<password>Shreya@2306</password>
 						<!-- Environment Parameter -->
 						<environment>Sandbox</environment>
-						<applicationName>flight-sys</applicationName>
+						<applicationName>flight-sys-one</applicationName>
 						<workerType>Micro</workerType>
 						<workers>1</workers>
 						<objectStoreV2>true</objectStoreV2>

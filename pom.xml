@@ -33,15 +33,16 @@
 				<configuration>
 				<cloudHubDeployment>
 						<uri>https://anypoint.mulesoft.com</uri>
-						<muleVersion>4.4.0</muleVersion>
+						<mule.version>4.4.0</mule.version>
 						<!-- Deploy User Parameter -->
-						<username>Shreya_2306</username>
-						<password>Shreya@2306</password>
+						<anypoint.username>Shreya_2306</anypoint.username>
+						<anypoint.password>Shreya@2306</anypoint.password>
 						<!-- Environment Parameter -->
-						<environment>Sandbox</environment>
-						<applicationName>flight-sys-one</applicationName>
-						<workerType>Micro</workerType>
-						<workers>1</workers>
+						<cloudhub.environment>Sandbox</cloudhub.environment>
+						<cloudhub.app>flight-sys-one</cloudhub.app>
+						<cloudhub.bg>Apisero</cloudhub.bg>
+						<cloudhub.worker>Micro</cloudhub.worker>
+						<cloudhub.workers>1</cloudhub.workers>
 						<objectStoreV2>true</objectStoreV2>
 						<properties>
 							<anypoint.platform.client_id>f8f4eb7d5ea942cb8a6d6d8a2011c667</anypoint.platform.client_id>
